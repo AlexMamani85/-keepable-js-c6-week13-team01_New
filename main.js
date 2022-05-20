@@ -70,6 +70,7 @@ function colorElement(colors, idNoteCard) {
 }
 
 function createElement(note) {
+  const uniqueNumberColor = noteNumber + 1;
   noteNumber += 1;
 
   // aquí estamos creando elementos
@@ -152,8 +153,9 @@ function createElement(note) {
   });
 
   colorButton.addEventListener("click", () => {
-    console.log(`#element-${this.noteNumber}`);
-    const colorContainer = document.querySelector(`#element-${noteNumber}`);
+    const colorContainer = document.querySelector(
+      `#element-${uniqueNumberColor}`
+    );
     console.log(colorContainer);
     colorContainer.classList.toggle("block");
   });
