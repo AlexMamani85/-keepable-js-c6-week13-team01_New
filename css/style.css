@@ -1,0 +1,61 @@
+body {
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 70px 1fr;
+}
+
+header {
+  grid-row-start: 1/2;
+  grid-column: 1/-1;
+}
+
+main {
+  grid-column: 2/-1;
+  padding: 20px;
+}
+
+form {
+  width: 600px;
+  margin: 1.5rem auto;
+  padding: 20px;
+}
+
+form input[type="text"],
+textarea {
+  display: block;
+  border: none;
+}
+.actionsButtons {
+  display: flex;
+  justify-content: space-between;
+}
+
+form button {
+  border: none;
+  background: none;
+}
+
+::placeholder {
+  color: rgb(0, 0, 0);
+}
+
+form textarea {
+  width: 100%;
+}
+
+.debug {
+  border: 3px solid brown;
+}
+
+.cardNote {
+  padding: 20px;
+  background-color: white;
+}
+
+.containerNotes {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
