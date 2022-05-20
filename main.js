@@ -8,7 +8,7 @@ const containerNotes = document.querySelector(".containerNotes");
 // variables
 let initialState = []; // aquí guardaremos objectos de los notes [{},{}]
 let trashArr = []; // aquí guardaremos temporalmente los notes eliminados [{}, {}]
-
+let noteNumber = 0;
 const noteStorage = JSON.parse(localStorage.getItem("notes"));
 
 form?.addEventListener("submit", (event) => {
@@ -48,8 +48,9 @@ form?.addEventListener("submit", (event) => {
 
 // colors => []
 
-function colorElement(colors) {
+function colorElement(colors, idNoteCard) {
   const colorContainer = document.createElement("div");
+  colorContainer.setAttribute("id", idNoteCard);
   colorContainer.classList.add("colorContainer");
   colors.map((colorItem) => {
     const colorRadius = document.createElement("div");
@@ -69,6 +70,8 @@ function colorElement(colors) {
 }
 
 function createElement(note) {
+  noteNumber += 1;
+
   // aquí estamos creando elementos
   const noteCard = document.createElement("div");
   const titleCard = document.createElement("h5"); // <h5></h5>
@@ -88,39 +91,42 @@ function createElement(note) {
 
   titleCard.textContent = `${title}`; // <h5></h5>
   bodyCard.textContent = `${body}`;
-  const colorContent = colorElement([
-    {
-      id: "white",
-      colorValue: "#FFFF",
-    },
-    { id: "red", colorValue: "#F28B82" },
-    {
-      id: "yellow",
-      colorValue: "#FBBC04",
-    },
-    {
-      id: "yellow2",
-      colorValue: "#FBBC04",
-    },
-    { id: "green", colorValue: "#CCFF90" },
-    {
-      id: "skyblue",
-      colorValue: "#A7FFEB",
-    },
-    { id: "skyblue2", colorValue: "#CBF0F8" },
-    {
-      id: "purple",
-      colorValue: "#AECBFA",
-    },
-    {
-      id: "purple2",
-      colorValue: "#D7AEFB",
-    },
-    {
-      id: "pink",
-      colorValue: "#FDCFE8",
-    },
-  ]);
+  const colorContent = colorElement(
+    [
+      {
+        id: "white",
+        colorValue: "#FFFF",
+      },
+      { id: "red", colorValue: "#F28B82" },
+      {
+        id: "yellow",
+        colorValue: "#FBBC04",
+      },
+      {
+        id: "yellow2",
+        colorValue: "#FBBC04",
+      },
+      { id: "green", colorValue: "#CCFF90" },
+      {
+        id: "skyblue",
+        colorValue: "#A7FFEB",
+      },
+      { id: "skyblue2", colorValue: "#CBF0F8" },
+      {
+        id: "purple",
+        colorValue: "#AECBFA",
+      },
+      {
+        id: "purple2",
+        colorValue: "#D7AEFB",
+      },
+      {
+        id: "pink",
+        colorValue: "#FDCFE8",
+      },
+    ],
+    `element-${noteNumber}`
+  );
   console.log(colorContent);
 
   // notecard es un div y le estamos agregando el h5 y el p
@@ -146,7 +152,9 @@ function createElement(note) {
   });
 
   colorButton.addEventListener("click", () => {
-    const colorContainer = document.querySelector(".colorContainer");
+    console.log(`#element-${this.noteNumber}`);
+    const colorContainer = document.querySelector(`#element-${noteNumber}`);
+    console.log(colorContainer);
     colorContainer.classList.toggle("block");
   });
 }
