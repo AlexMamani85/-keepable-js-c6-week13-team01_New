@@ -43,6 +43,7 @@ form {
 form input[type="text"],
 textarea {
   display: block;
+  margin-block: 1rem;
   border: none;
 }
 .actionsButtons {
@@ -64,7 +65,7 @@ form textarea {
 }
 
 .debug {
-  border: 3px solid brown;
+  border: 3px solid rgba(255, 255, 255, 0.2);
 }
 
 .cardNote {
@@ -96,4 +97,51 @@ form textarea {
   /* border-color: black; */
   height: 25px;
   width: 25px;
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+select {
+  width: 20px;
+  display: grid;
+  border: none;
+  border-radius: 50%;
+  grid-template-columns: repeat(auto-fill, 20px);
+}
+
+select option {
+  border-radius: 50%;
+}
+
+select .FFFF {
+  background-color: #fff;
+}
+
+select .F28B82 {
+  background-color: #f28b82;
+}
+select .FBBC04 {
+  background-color: #fbbc04;
+}
+select .CCFF90 {
+  background-color: #ccff90;
+}
+select .A7FFEB {
+  background-color: #a7ffeb;
+}
+select .CBF0F8 {
+  background-color: #cbf0f8;
+}
+select .AECBFA {
+  background-color: #aecbfa;
+}
+select .D7AEFB {
+  background-color: #d7aefb;
+}
+select .FDCFE8 {
+  background-color: #fdcfe8;
 }

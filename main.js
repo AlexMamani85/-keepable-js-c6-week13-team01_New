@@ -5,11 +5,9 @@ const body = document.querySelector("#body");
 // este containerNotes que es un div vacio, estamos agregando cada NoteGrid
 const containerNotes = document.querySelector(".containerNotes");
 const actionsButtons = document.querySelector(".actionsButtons");
-const colorFormInput = document.querySelector(
-  ".actionsButtons input[type='button']"
-);
+const colorFormInput = document.querySelector(".actionsButtons select");
 // variables
-let initialState = []; // aquí guardaremos objectos de los notes [{},{}]
+let initialState = []; //[{},{},{}] // aquí guardaremos objectos de los notes [{},{}]
 let trashArr = []; // aquí guardaremos temporalmente los notes eliminados [{}, {}]
 let noteNumber = 0;
 const noteStorage = JSON.parse(localStorage.getItem("notes"));
@@ -51,34 +49,41 @@ const colorInput = colorElement(
   `element-${noteNumber}`
 );
 
-console.log(colorInput);
+// console.log(colorInput);
 actionsButtons.classList.add("debug");
 
 actionsButtons.append(colorInput);
-console.log(actionsButtons);
+// console.log(actionsButtons);
 
-colorFormInput.addEventListener("click", () => {
+colorFormInput.addEventListener("click", (e) => {
   const colorContainer = document.querySelector(`#element-${noteNumber}`);
-  console.log(colorContainer);
-  colorContainer.classList.toggle("block");
+  console.log(e.target.value);
+  form.style.backgroundColor = e.target.value;
+  // colorContainer.classList.toggle("block");
 });
 
 form?.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const newNote = {
-    id: Date.now(), //16171314141
+    id: `note-${String(Date.now()).slice(-5, -1)}`, //1617
     title: "",
     body: "",
-    color: "",
+    color: "", // "" === falsy
   };
 
   // console.log(newNote.title);
   // const title = newNote.title;
   // const body = newNote.body
   // const {title, body} = note
-  newNote.title = title.value;
+  newNote.title = title.value; // article 1
   newNote.body = body.value;
+  newNote.color = colorFormInput.value;
+  // console.log({ newNote });
+
+  if (newNote.color) {
+    form.style.backgroundColor = `${newNote.color}`;
+  }
 
   /* 
     newNote = {
@@ -88,22 +93,21 @@ form?.addEventListener("submit", (event) => {
     }
   */
 
-  // guardamos información
+  // guardamos información, []
   initialState.push(newNote);
   localStorage.setItem("notes", JSON.stringify(initialState));
   createElement(newNote); // crea la estructura html de ese newNote
+  // setear los valores del formulario
+  title.value = "";
+  body.value = "";
+  form.style.backgroundColor = "#fff";
+
+  console.log({ noteStorage });
 });
 
-// note = newoNote =>   newNote = {
-//   id: 25642154624,
-//   title: "title 1"
-//   body: "yahdjajd"
-// }
-
-// colors => []
-
+// color = [], |
 function colorElement(colors, idNoteCard, idCard) {
-  console.log({ idNoteCard });
+  // console.log({ idCard });
   const colorContainer = document.createElement("div");
   colorContainer.setAttribute("id", idNoteCard);
   colorContainer.classList.add("colorContainer");
@@ -115,16 +119,26 @@ function colorElement(colors, idNoteCard, idCard) {
     // colorRadius.classList.add("hidden");
     colorContainer.append(colorRadius);
     colorRadius.addEventListener("click", () => {
-      const noteCard = document.querySelector(".cardNote");
+      // console.log(colorItem.colorValue);
+      const noteCard = document.querySelector(`#${idCard}`);
       noteCard.style.backgroundColor = colorItem.colorValue;
-      console.log(colorItem.colorValue);
+      // console.log(colorItem.colorValue);
     });
   });
 
   return colorContainer;
 }
 
-function createElement(note) {
+/* 
+ newNote = {
+      id: 25642154624,
+      title: "title 1"
+      body: "yahdjajd",
+      color: #e1e1e1
+    }
+*/
+function createElement(note = {}) {
+  console.log({ note });
   const uniqueNumberColor = noteNumber + 1;
   noteNumber += 1;
 
@@ -134,6 +148,7 @@ function createElement(note) {
   const bodyCard = document.createElement("p");
   const deleteButton = document.createElement("input");
   const colorButton = document.createElement("input");
+  noteCard.style.backgroundColor = `${note.color}`;
 
   // el setAttribute es para agregar atributos a nuestros elementos
   noteCard.setAttribute("id", note.id); // <div id="25642154624"></div>
@@ -181,21 +196,16 @@ function createElement(note) {
         colorValue: "#FDCFE8",
       },
     ],
-    `element-${noteNumber}`
+    `element-${noteNumber}`,
+    note.id
   );
-  console.log(colorContent);
+  // console.log(colorContent);
 
   // notecard es un div y le estamos agregando el h5 y el p
   noteCard.append(titleCard, bodyCard, colorButton, deleteButton, colorContent);
 
-  /* 
-    <div>olorContent);
-      <p>lorjegabnfjkaf</p>
-      <input type="button" value="Delete">
-    </div>
-  
-  */
   const { id } = note; // 6136714
+  containerNotes.classList.add("debug");
   containerNotes.append(noteCard);
 
   deleteButton.addEventListener("click", () => {
@@ -215,3 +225,14 @@ function createElement(note) {
     colorContainer.classList.toggle("block");
   });
 }
+
+console.log({ noteStorage });
+noteStorage.map((noteItem) => {
+  const getNoteItem = createElement(noteItem);
+  console.log({ getNoteItem });
+  // console.log(createElement(noteItem));
+
+  // const newNoteItem = createElement(noteItem);
+  // containerNotes.append({ newNoteItem });
+  // console.log(newNoteItem);
+});
