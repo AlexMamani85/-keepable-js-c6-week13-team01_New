@@ -4,19 +4,73 @@ const title = document.querySelector("#title-input"); // <input>
 const body = document.querySelector("#body");
 // este containerNotes que es un div vacio, estamos agregando cada NoteGrid
 const containerNotes = document.querySelector(".containerNotes");
-
+const actionsButtons = document.querySelector(".actionsButtons");
+const colorFormInput = document.querySelector(
+  ".actionsButtons input[type='button']"
+);
 // variables
 let initialState = []; // aquí guardaremos objectos de los notes [{},{}]
 let trashArr = []; // aquí guardaremos temporalmente los notes eliminados [{}, {}]
 let noteNumber = 0;
 const noteStorage = JSON.parse(localStorage.getItem("notes"));
 
+const colorInput = colorElement(
+  [
+    {
+      id: "white",
+      colorValue: "#FFFF",
+    },
+    { id: "red", colorValue: "#F28B82" },
+    {
+      id: "yellow",
+      colorValue: "#FBBC04",
+    },
+    {
+      id: "yellow2",
+      colorValue: "#FBBC04",
+    },
+    { id: "green", colorValue: "#CCFF90" },
+    {
+      id: "skyblue",
+      colorValue: "#A7FFEB",
+    },
+    { id: "skyblue2", colorValue: "#CBF0F8" },
+    {
+      id: "purple",
+      colorValue: "#AECBFA",
+    },
+    {
+      id: "purple2",
+      colorValue: "#D7AEFB",
+    },
+    {
+      id: "pink",
+      colorValue: "#FDCFE8",
+    },
+  ],
+  `element-${noteNumber}`
+);
+
+console.log(colorInput);
+actionsButtons.classList.add("debug");
+
+actionsButtons.append(colorInput);
+console.log(actionsButtons);
+
+colorFormInput.addEventListener("click", () => {
+  const colorContainer = document.querySelector(`#element-${noteNumber}`);
+  console.log(colorContainer);
+  colorContainer.classList.toggle("block");
+});
+
 form?.addEventListener("submit", (event) => {
   event.preventDefault();
+
   const newNote = {
     id: Date.now(), //16171314141
     title: "",
     body: "",
+    color: "",
   };
 
   // console.log(newNote.title);
@@ -48,7 +102,8 @@ form?.addEventListener("submit", (event) => {
 
 // colors => []
 
-function colorElement(colors, idNoteCard) {
+function colorElement(colors, idNoteCard, idCard) {
+  console.log({ idNoteCard });
   const colorContainer = document.createElement("div");
   colorContainer.setAttribute("id", idNoteCard);
   colorContainer.classList.add("colorContainer");
@@ -140,8 +195,8 @@ function createElement(note) {
     </div>
   
   */
-  containerNotes.append(noteCard);
   const { id } = note; // 6136714
+  containerNotes.append(noteCard);
 
   deleteButton.addEventListener("click", () => {
     initialState = initialState.filter((n) => n.id !== id); // 6136714)); // []
